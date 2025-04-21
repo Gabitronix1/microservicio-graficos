@@ -15,12 +15,18 @@ async def generar_grafico(request: Request):
     x = body.get("x", [])
     y = body.get("y", [])
     titulo = body.get("titulo", "Gráfico generado")
+    tipo = body.get("tipo", "lineas")
 
     if not x or not y:
         return {"error": "Debes enviar listas 'x' y 'y'"}
 
     fig, ax = plt.subplots()
-    ax.plot(x, y, marker='o')
+
+    if tipo == "barras":
+        ax.bar(x, y)
+    else:
+        ax.plot(x, y, marker='o')
+
     ax.set_title(titulo)
     ax.set_xlabel("Eje X")
     ax.set_ylabel("Eje Y")
